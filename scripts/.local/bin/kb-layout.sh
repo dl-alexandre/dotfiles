@@ -2,32 +2,28 @@
 set -euo pipefail
 
 DEV="apple-inc.-apple-internal-keyboard-/-trackpad"
-
-# Grab devices JSON once
 JSON="$(hyprctl -j devices || true)"
 
-# Try explicit variant first (newer Hyprland sometimes exposes it),
-# then fall back to active_keymap string.
-VARIANT="$(
-  printf '%s' "$JSON" |
-    jq -r --arg dev "$DEV" '
-      (.keyboards[] | select(.name==$dev) | .variant // empty) // empty'
-)"
+read -r VARIANT KEYMAP < <(
+  jq -r --arg dev "$DEV" '
+    .keyboards[] | select(.name==$dev)
+    | [.variant, .active_keymap] | @tsv
+  ' <<<"$JSON"
+)
 
-if [[ -z "${VARIANT}" ]]; then
-  KEYMAP="$(
-    printf '%s' "$JSON" |
-      jq -r --arg dev "$DEV" '
-        (.keyboards[] | select(.name==$dev) | .active_keymap // empty) // empty'
-  )"
-else
-  KEYMAP=""
+# prefer active_keymap if it is meaningful
+LAYOUT="$KEYMAP"
+
+# fallback if active_keymap is empty
+if [[ -z "$LAYOUT" || "$LAYOUT" == "null" ]]; then
+  LAYOUT="$VARIANT"
 fi
 
-# Normalize to DV / US
-out="US"
-if [[ "${VARIANT,,}" == "dvorak" ]] || [[ "${KEYMAP,,}" =~ dvorak ]]; then
-  out="DV"
-fi
+# Normalize
+case "${LAYOUT,,}" in
+*dvorak*) out="DV" ;;
+*us* | *english*) out="US" ;;
+*) out="??" ;; # unknown layout
+esac
 
 printf '%s\n' "$out"
