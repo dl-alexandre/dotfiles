@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=1.0
+Name=Suno
+Comment=Suno
+Exec=omarchy-launch-webapp https://suno.com/
+Terminal=false
+Type=Application
+Icon=/home/alexandre/.local/share/applications/icons/Suno.png
+StartupNotify=true

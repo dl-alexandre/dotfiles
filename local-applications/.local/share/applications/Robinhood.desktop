@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=1.0
+Name=Robinhood
+Comment=Robinhood
+Exec=omarchy-launch-webapp https://robinhood.com
+Terminal=false
+Type=Application
+Icon=/home/alexandre/.local/share/applications/icons/Robinhood.png
+StartupNotify=true

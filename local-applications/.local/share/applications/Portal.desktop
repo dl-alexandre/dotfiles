@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=1.0
+Name=Portal
+Comment=Portal
+Exec=omarchy-launch-webapp https://myportal.calpoly.edu/
+Terminal=false
+Type=Application
+Icon=/home/alexandre/.local/share/applications/icons/Portal.png
+StartupNotify=true

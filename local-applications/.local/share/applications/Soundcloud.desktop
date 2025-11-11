@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=1.0
+Name=Soundcloud
+Comment=Soundcloud
+Exec=omarchy-launch-webapp https://soundcloud.com/discover
+Terminal=false
+Type=Application
+Icon=/home/alexandre/.local/share/applications/icons/Soundcloud.png
+StartupNotify=true

@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=1.0
+Name=Canvas
+Comment=Canvas
+Exec=omarchy-launch-webapp https://canvas.calpoly.edu/
+Terminal=false
+Type=Application
+Icon=/home/alexandre/.local/share/applications/icons/Canvas.png
+StartupNotify=true

@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=1.0
+Name=Github
+Comment=Github
+Exec=omarchy-launch-webapp https://github.com/dl-alexandre
+Terminal=false
+Type=Application
+Icon=/home/alexandre/.local/share/applications/icons/Github.png
+StartupNotify=true

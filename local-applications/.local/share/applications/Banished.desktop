@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Banished
+Comment=Play this game on Steam
+Exec=steam steam://rungameid/242920
+Icon=steam_icon_242920
+Terminal=false
+Type=Application
+Categories=Game;

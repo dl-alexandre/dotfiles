@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Chess Arena Playtest
+Comment=Play this game on Steam
+Exec=steam steam://rungameid/3993110
+Icon=steam_icon_3993110
+Terminal=false
+Type=Application
+Categories=Game;
