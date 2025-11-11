@@ -12,3 +12,21 @@ source ~/.local/share/omarchy/default/bash/rc
 #
 # Set a custom prompt with the directory revealed (alternatively use https://starship.rs)
 # PS1="\W \[\e]0;\w\a\]$PS1"
+
+
+
+
+
+
+
+
+
+
+# Double-ESC: fetch previous command, prepend sudo, execute immediately
+# \e\e = press Esc twice.
+# \C-p = recall previous history entry into the current line.
+# \C-a = move cursor to start of line.
+# sudo = the text inserted.
+# \C-e = move to end of line.
+bind '"\e\e":"\C-p\C-a sudo \C-e"'
+
