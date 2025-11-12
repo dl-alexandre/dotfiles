@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+set -euo pipefail
+RUNTIME_DIR="${XDG_RUNTIME_DIR:-/tmp}"
+LOCK="$RUNTIME_DIR/wifix.lock"
+STAMP="$RUNTIME_DIR/wifix.last"
+COOLDOWN=8
+
+now=$(date +%s)
+if [ -f "$STAMP" ] && [ $((now - $(cat "$STAMP" || echo 0))) -lt $COOLDOWN ]; then
+  echo "wifix: recently ran; skipping."
+  exit 0
+fi
+
+exec 9>"$LOCK" || exit 0
+flock -n 9 || { echo "wifix: another instance running"; exit 0; }
+
+iface="$(ip -o link show | awk -F': ' '/wl/{print $2; exit}')"
+[ -z "${iface:-}" ] && { echo "wifix: no Wi-Fi interface found"; exit 1; }
+
+echo "wifix: bouncing $iface..."
+sudo systemctl stop iwd || true
+sudo ip link set "$iface" down || true
+
+if lsmod | awk '$1=="wl"{found=1} END{exit !found}'; then
+  used_by=$(lsmod | awk '$1=="wl"{print $3}')
+  if [ "${used_by:-0}" = "0" ]; then
+    sudo timeout 3s modprobe -r wl || echo "wifix: unload skipped"
+  else
+    echo "wifix: wl busy ($used_by)"
+  fi
+fi
+
+sudo modprobe wl 2>/dev/null || true
+sudo ip link set "$iface" up || true
+sudo systemctl start iwd || true
+
+sleep 1
+command -v iwctl >/dev/null && iwctl station "$iface" scan || true
+
+echo "$now" > "$STAMP"
+echo "wifix: done — $iface restarted."
+
