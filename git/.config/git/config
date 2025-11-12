@@ -10,3 +10,5 @@
 [user]
 	name = Dalton Alexandre
 	email = alley.nightly_0b@icloud.com
+[core]
+	sshCommand = ssh -i ~/.ssh/github

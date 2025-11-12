@@ -104,7 +104,7 @@
     "tooltip-format-disconnected": "Disconnected",
     "interval": 3,
     "spacing": 1,
-    "on-click": "omarchy-launch-floating-terminal-with-presentation iwctl"
+    "on-click": "sh -c 'wifix && omarchy-launch-floating-terminal-with-presentation iwctl'"
   },
   "temperature": {
     "thermal-zone": 0,
