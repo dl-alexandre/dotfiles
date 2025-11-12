@@ -37,6 +37,8 @@ done
 
 echo "Dotfiles installed successfully!"
 echo ""
+
+echo ""
 echo "Remember to configure sudoers for auto-power.sh:"
 echo "  sudo visudo -f /etc/sudoers.d/cpu-thermal"
 echo ""

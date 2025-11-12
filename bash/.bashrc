@@ -1,3 +1,6 @@
+# If not running interactively, don't do anything (leave this at the top of this file)
+[[ $- != *i* ]] && return
+
 # All the default Omarchy aliases and functions
 # (don't mess with these directly, just overwrite them here!)
 source ~/.local/share/omarchy/default/bash/rc
@@ -29,4 +32,8 @@ source ~/.local/share/omarchy/default/bash/rc
 # sudo = the text inserted.
 # \C-e = move to end of line.
 bind '"\e\e":"\C-p\C-a sudo \C-e"'
+
+
+# amp
+export PATH="$HOME/.local/bin:$PATH"
 
