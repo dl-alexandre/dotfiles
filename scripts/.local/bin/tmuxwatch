@@ -1,1 +1,13 @@
-/tmp/tmuxwatch/tmuxwatch
+#!/usr/bin/env bash
+set -euo pipefail
+
+TMUXWATCH_DIR="${TMUXWATCH_DIR:-$HOME/tmuxwatch}"
+TARGET="${TMUXWATCH_BIN:-$TMUXWATCH_DIR/tmuxwatch}"
+
+if [[ ! -x "$TARGET" ]]; then
+  echo "tmuxwatch binary not found at $TARGET" >&2
+  echo "Build it (e.g. 'cd $TMUXWATCH_DIR && go build ./cmd/tmuxwatch') or set TMUXWATCH_BIN." >&2
+  exit 1
+fi
+
+exec "$TARGET" "$@"
