@@ -1,0 +1,10 @@
+[Unit]
+Description=Backup dotfiles to GitHub
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=%h/dotfiles/scripts/backup-dotfiles.sh
+StandardOutput=journal
+StandardError=journal
