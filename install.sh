@@ -8,6 +8,7 @@ PACKAGES=(
   "alacritty"
   "bash"
   "btop"
+  "fonts"
   "environment.d"
   "fastfetch"
   "fcitx5"
