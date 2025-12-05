@@ -37,3 +37,4 @@ bind '"\e\e":"\C-p\C-a sudo \C-e"'
 # amp
 export PATH="$HOME/.local/bin:$PATH"
 
+export PATH="$HOME/.local/bin:$PATH"

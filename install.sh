@@ -5,7 +5,6 @@ set -e
 
 DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PACKAGES=(
-  "alacritty"
   "bash"
   "btop"
   "fonts"
@@ -13,6 +12,7 @@ PACKAGES=(
   "fastfetch"
   "fcitx5"
   "git"
+  "ghostty"
   "gnupg"
   "hypr"
   "kitty"
