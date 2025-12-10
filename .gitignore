@@ -21,3 +21,6 @@ helium/.config/net.imput.helium/Default/Login\ Data*
 
 # Other
 .env
+
+# Binaries
+scripts/.local/bin/helium
