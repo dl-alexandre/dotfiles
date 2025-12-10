@@ -1,0 +1,6 @@
+2025/12/10-04:42:44.930 176c Creating DB /home/alexandre/.config/net.imput.helium/Default/IndexedDB/https_www.keybr.com_0.indexeddb.leveldb since it was missing.
+2025/12/10-04:42:44.962 176c Reusing MANIFEST /home/alexandre/.config/net.imput.helium/Default/IndexedDB/https_www.keybr.com_0.indexeddb.leveldb/MANIFEST-000001
+2025/12/10-04:42:47.015 176d Level-0 table #5: started
+2025/12/10-04:42:47.025 176d Level-0 table #5: 794 bytes OK
+2025/12/10-04:42:47.041 176d Delete type=0 #3
+2025/12/10-04:42:47.041 176d Manual compaction at level-0 from (begin) .. (end); will stop at (end)

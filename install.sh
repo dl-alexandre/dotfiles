@@ -2,42 +2,66 @@
 # Install dotfiles using stow
 
 set -e
+shopt -s nullglob  # Prevent globbing errors if no matches
+
+# Check if stow is installed
+if ! command -v stow &> /dev/null; then
+  echo "Error: stow is not installed. Please install it first."
+  exit 1
+fi
+
+# Function to show usage
+usage() {
+  echo "Usage: $0 [install|uninstall]"
+  echo "  install  - Stow dotfiles (default)"
+  echo "  uninstall - Unstow dotfiles"
+  exit 1
+}
+
+ACTION="install"
+if [[ $# -gt 0 ]]; then
+  case $1 in
+    install) ACTION="install" ;;
+    uninstall) ACTION="uninstall" ;;
+    *) usage ;;
+  esac
+fi
 
 DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-PACKAGES=(
-  "bash"
-  "btop"
-  "fonts"
-  "environment.d"
-  "fastfetch"
-  "fcitx5"
-  "git"
-  "ghostty"
-  "gnupg"
-  "helium"
-  "hypr"
-  "kitty"
-  "nvim"
-  "opencode"
-  "scripts"
-  "ssh"
-  "starship"
-  "swayosd"
-  "systemd"
-  "uwsm"
-  "walker"
-  "waybar"
-  "xournalpp"
-)
 
-echo "Installing dotfiles from $DOTFILES_DIR..."
+# Dynamically get packages from directories (excluding hidden and non-dotfile dirs)
+PACKAGES=()
+for dir in */; do
+  dir=${dir%/}
+  if [[ -d "$dir" && ! "$dir" =~ ^\. && "$dir" != "scripts" ]]; then
+    PACKAGES+=("$dir")
+  fi
+done
+# Add scripts separately as it's nested
+PACKAGES+=("scripts")
+
+if [[ "$ACTION" == "install" ]]; then
+  echo "Installing dotfiles from $DOTFILES_DIR..."
+  echo "Packages to install: ${PACKAGES[*]}"
+  STOW_CMD="stow --restow"
+else
+  echo "Uninstalling dotfiles from $DOTFILES_DIR..."
+  echo "Packages to uninstall: ${PACKAGES[*]}"
+  STOW_CMD="stow --delete"
+fi
 
 cd "$DOTFILES_DIR"
 
 for package in "${PACKAGES[@]}"; do
-  echo "Stowing $package..."
-  stow "$package"
+  if [[ -d "$package" ]]; then
+    echo "Processing $package..."
+    $STOW_CMD "$package"
+  else
+    echo "Warning: Directory $package not found, skipping."
+  fi
 done
+
+echo "Operation completed successfully!"
 
 echo "Dotfiles installed successfully!"
 echo ""

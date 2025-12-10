@@ -1,0 +1,6 @@
+2025/12/10-08:45:02.540 176c Creating DB /home/alexandre/.config/net.imput.helium/Default/IndexedDB/https_robinhood.com_0.indexeddb.leveldb since it was missing.
+2025/12/10-08:45:02.568 176c Reusing MANIFEST /home/alexandre/.config/net.imput.helium/Default/IndexedDB/https_robinhood.com_0.indexeddb.leveldb/MANIFEST-000001
+2025/12/10-08:51:20.791 176d Level-0 table #5: started
+2025/12/10-08:51:20.800 176d Level-0 table #5: 1530 bytes OK
+2025/12/10-08:51:20.817 176d Delete type=0 #3
+2025/12/10-08:51:20.817 176d Manual compaction at level-0 from (begin) .. (end); will stop at (end)

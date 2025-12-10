@@ -1,2 +1,3 @@
-2025/12/09-20:21:23.068 16339 Creating DB /home/alexandre/.config/net.imput.helium/Default/shared_proto_db/metadata since it was missing.
-2025/12/09-20:21:23.114 16339 Reusing MANIFEST /home/alexandre/.config/net.imput.helium/Default/shared_proto_db/metadata/MANIFEST-000001
+2025/12/10-10:59:04.719 14404 Reusing MANIFEST /home/alexandre/.config/net.imput.helium/Default/shared_proto_db/metadata/MANIFEST-000001
+2025/12/10-10:59:04.720 14404 Recovering log #3
+2025/12/10-10:59:04.720 14404 Reusing old log /home/alexandre/.config/net.imput.helium/Default/shared_proto_db/metadata/000003.log 

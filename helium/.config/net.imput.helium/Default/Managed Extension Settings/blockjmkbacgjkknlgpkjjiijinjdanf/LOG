@@ -1,2 +1,3 @@
-2025/12/09-20:21:33.089 1633c Creating DB /home/alexandre/.config/net.imput.helium/Default/Managed Extension Settings/blockjmkbacgjkknlgpkjjiijinjdanf since it was missing.
-2025/12/09-20:21:33.135 1633c Reusing MANIFEST /home/alexandre/.config/net.imput.helium/Default/Managed Extension Settings/blockjmkbacgjkknlgpkjjiijinjdanf/MANIFEST-000001
+2025/12/10-10:59:09.480 14409 Reusing MANIFEST /home/alexandre/.config/net.imput.helium/Default/Managed Extension Settings/blockjmkbacgjkknlgpkjjiijinjdanf/MANIFEST-000001
+2025/12/10-10:59:09.480 14409 Recovering log #3
+2025/12/10-10:59:09.481 14409 Reusing old log /home/alexandre/.config/net.imput.helium/Default/Managed Extension Settings/blockjmkbacgjkknlgpkjjiijinjdanf/000003.log 

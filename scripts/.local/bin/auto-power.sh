@@ -1,6 +1,9 @@
 #!/bin/bash
 # Auto-switch CPU governor and thermal policy based on charging state
 
+# Source machine-specific vars if file exists
+[ -f ~/.env.local ] && source ~/.env.local
+
 STATUS=$(cat /sys/class/power_supply/*/status 2>/dev/null | grep -i "charging\|full" | head -1)
 
 if [[ "$STATUS" =~ "Charging"|"Full" ]]; then
@@ -15,6 +18,8 @@ fi
 
 echo "Switching to $GOVERNOR governor and $POLICY thermal policy..."
 echo "$GOVERNOR" | sudo tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor > /dev/null
-echo "$POLICY" | sudo tee /sys/class/thermal/thermal_zone*/policy > /dev/null
+if [ -f "/sys/class/thermal/thermal_zone${CPU_THERMAL_ZONE}/policy" ]; then
+  echo "$POLICY" | sudo tee "/sys/class/thermal/thermal_zone${CPU_THERMAL_ZONE}/policy" > /dev/null
+fi
 
 notify-send "Power Profile" "$MSG"
