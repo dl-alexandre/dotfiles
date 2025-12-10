@@ -1,0 +1,6 @@
+2025/12/10-05:34:30.063 176d Creating DB /home/alexandre/.config/net.imput.helium/Default/WebStorage/3/IndexedDB/indexeddb.leveldb since it was missing.
+2025/12/10-05:34:30.093 176d Reusing MANIFEST /home/alexandre/.config/net.imput.helium/Default/WebStorage/3/IndexedDB/indexeddb.leveldb/MANIFEST-000001
+2025/12/10-05:44:34.194 176d Level-0 table #5: started
+2025/12/10-05:44:34.205 176d Level-0 table #5: 1200 bytes OK
+2025/12/10-05:44:34.231 176d Delete type=0 #3
+2025/12/10-05:44:34.231 176d Manual compaction at level-0 from (begin) .. (end); will stop at (end)

@@ -1,0 +1,26 @@
+# Dotfiles .gitignore
+# Machine-specific files
+.env.local
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.swp
+*.bak
+
+# Logs
+*.log
+
+# Sensitive data
+ssh/known_hosts
+helium/.config/net.imput.helium/Default/Cookies
+helium/.config/net.imput.helium/Default/Login\ Data*
+
+# Other
+.env
+
+# Binaries
+scripts/.local/bin/helium

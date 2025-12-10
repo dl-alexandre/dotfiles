@@ -1,0 +1,13 @@
+[Desktop Entry]
+Version=1.0
+Name=Helium
+GenericName=Web Browser
+Comment=Access the Internet
+Exec=/home/alexandre/.local/bin/helium %U
+StartupNotify=true
+StartupWMClass=helium
+Terminal=false
+Icon=/home/alexandre/.local/share/applications/icons/helium.svg
+Type=Application
+Categories=Network;WebBrowser;
+MimeType=application/pdf;text/html;x-scheme-handler/http;x-scheme-handler/https;

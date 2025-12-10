@@ -48,11 +48,11 @@
       "5": []
     }
   },
-  "hyprland/language": {
-    "keyboard_name": "apple-inc.-apple-internal-keyboard-/-trackpad",
-    "format": "{layout} {variant}",
-    "tooltip": false
-  },
+   "hyprland/language": {
+     "keyboard_name": "$KEYBOARD_NAME",
+     "format": "{layout} {variant}",
+     "tooltip": false
+   },
   "custom/kb": {
   "exec": "~/.local/bin/kb-layout.sh",
   "return-type": "plain",
