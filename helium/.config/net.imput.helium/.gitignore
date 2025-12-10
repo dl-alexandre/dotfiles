@@ -1,0 +1,11 @@
+Cache/
+Code Cache/
+GPUCache/
+ShaderCache/
+GrShaderCache/
+GraphiteDawnCache/
+Service Worker/
+Local Storage/
+Session Storage/
+*journal
+*.log
