@@ -4,8 +4,11 @@ GPUCache/
 ShaderCache/
 GrShaderCache/
 GraphiteDawnCache/
+DawnGraphiteCache/
+DawnWebGPUCache/
 Service Worker/
 Local Storage/
 Session Storage/
+Sessions/
 *journal
 *.log
