@@ -18,6 +18,7 @@ PACKAGES=(
   "hypr"
   "kitty"
   "nvim"
+  "omarchy"
   "opencode"
   "scripts"
   "ssh"
