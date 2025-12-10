@@ -41,6 +41,15 @@ if [[ "$needs_push" == false ]]; then
   exit 0
 fi
 
+# Pull and rebase to sync with remote
+if [[ "$needs_push" == true ]]; then
+  if ! git pull --rebase origin "$CURRENT_BRANCH"; then
+    notify "Backup failed: could not pull from GitHub"
+    echo "Error: Failed to pull from GitHub"
+    exit 1
+  fi
+fi
+
 # Push to remote
 if ! git push origin "$CURRENT_BRANCH"; then
   notify "Backup failed: could not push to GitHub"
