@@ -15,7 +15,14 @@ notify() {
 
 cd "$DOTFILES_DIR"
 
-# Check if there are changes
+# Pull and rebase to sync with remote first
+if ! git pull --rebase origin "$CURRENT_BRANCH"; then
+  notify "Backup failed: could not pull from GitHub"
+  echo "Error: Failed to pull from GitHub"
+  exit 1
+fi
+
+# Check if there are changes after pull
 if ! git diff-index --quiet HEAD --; then
   echo "Changes detected, committing..."
   git add -A
@@ -39,15 +46,6 @@ if [[ "$needs_push" == false ]]; then
   echo "Nothing new to push."
   notify "No changes to backup"
   exit 0
-fi
-
-# Pull and rebase to sync with remote
-if [[ "$needs_push" == true ]]; then
-  if ! git pull --rebase origin "$CURRENT_BRANCH"; then
-    notify "Backup failed: could not pull from GitHub"
-    echo "Error: Failed to pull from GitHub"
-    exit 1
-  fi
 fi
 
 # Push to remote
