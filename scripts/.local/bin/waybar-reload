@@ -1,0 +1,5 @@
+#!/bin/bash
+# Reload waybar to fix sync issues
+pkill waybar
+sleep 1
+waybar &
