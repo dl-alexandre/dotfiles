@@ -1,3 +1,3 @@
-2025/12/17-14:06:07.833 1a506 Reusing MANIFEST /home/alexandre/.config/net.imput.helium/Default/Sync Data/LevelDB/MANIFEST-000001
-2025/12/17-14:06:07.946 1a506 Recovering log #3
-2025/12/17-14:06:07.947 1a506 Reusing old log /home/alexandre/.config/net.imput.helium/Default/Sync Data/LevelDB/000003.log 
+2025/12/29-20:49:20.491 d4c4 Reusing MANIFEST /home/alexandre/.config/net.imput.helium/Default/Sync Data/LevelDB/MANIFEST-000001
+2025/12/29-20:49:20.562 d4c4 Recovering log #3
+2025/12/29-20:49:20.562 d4c4 Reusing old log /home/alexandre/.config/net.imput.helium/Default/Sync Data/LevelDB/000003.log 
