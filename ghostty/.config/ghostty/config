@@ -1,5 +1,5 @@
 # Dynamic theme colors
-config-file = ?"~/.config/omarchy/current/theme/ghostty.conf"
+config-file = ~/.config/omarchy/current/theme/ghostty.conf
 
 # Font
 font-family = "CaskaydiaMono Nerd Font"
@@ -11,6 +11,7 @@ window-padding-x = 14
 window-padding-y = 14
 confirm-close-surface=false
 resize-overlay = never
+working-directory = inherit
 
 # Cursor stlying
 cursor-style = "block"
@@ -19,12 +20,8 @@ shell-integration-features = no-cursor
 
 # Keyboard bindings
 keybind = f11=toggle_fullscreen
-keybind = shift+insert=paste_from_clipboard
 keybind = control+insert=copy_to_clipboard
-keybind = super+control+shift+alt+arrow_down=resize_split:down,100
-keybind = super+control+shift+alt+arrow_up=resize_split:up,100
-keybind = super+control+shift+alt+arrow_left=resize_split:left,100
-keybind = super+control+shift+alt+arrow_right=resize_split:right,100
+# keybind = shift+insert=ignore  # Removed to allow SUPER+V universal paste
 
 # Slowdown mouse scrolling
 mouse-scroll-multiplier = 0.95

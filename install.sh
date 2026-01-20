@@ -6,60 +6,90 @@ shopt -s nullglob  # Prevent globbing errors if no matches
 
 # Check if stow is installed
 if ! command -v stow &> /dev/null; then
-  echo "Error: stow is not installed. Please install it first."
-  exit 1
+    echo "Error: stow is not installed. Please install it first."
+    exit 1
 fi
 
 # Function to show usage
 usage() {
-  echo "Usage: $0 [install|uninstall]"
-  echo "  install  - Stow dotfiles (default)"
-  echo "  uninstall - Unstow dotfiles"
-  exit 1
+    echo "Usage: $0 [install|uninstall]"
+    echo "  install  - Stow dotfiles (default)"
+    echo "  uninstall - Unstow dotfiles"
+    exit 1
 }
 
 ACTION="install"
 if [[ $# -gt 0 ]]; then
-  case $1 in
-    install) ACTION="install" ;;
-    uninstall) ACTION="uninstall" ;;
-    *) usage ;;
-  esac
+    case $1 in
+        install) ACTION="install" ;;
+        uninstall) ACTION="uninstall" ;;
+        *) usage ;;
+    esac
 fi
 
 DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
+# Detect platform (linux or darwin/macos)
+OS=$(uname -s | tr '[:upper:]' '[:lower:]')
+case "$OS" in
+    linux*) PLATFORM="linux" ;;
+    darwin*) PLATFORM="macos" ;;
+    *) echo "Unknown OS: $OS"; exit 1 ;;
+esac
+
 # Dynamically get packages from directories (excluding hidden and non-dotfile dirs)
 PACKAGES=()
 for dir in */; do
-  dir=${dir%/}
-  if [[ -d "$dir" && ! "$dir" =~ ^\. && "$dir" != "scripts" ]]; then
-    PACKAGES+=("$dir")
-  fi
+    dir=${dir%/}
+    if [[ -d "$dir" && ! "$dir" =~ ^\. && "$dir" != "scripts" ]]; then
+        # Skip agents-md (handled separately)
+        if [[ "$dir" != "agents-md" ]]; then
+            PACKAGES+=("$dir")
+        fi
+    fi
 done
 # Add scripts separately as it's nested
 PACKAGES+=("scripts")
 
 if [[ "$ACTION" == "install" ]]; then
-  echo "Installing dotfiles from $DOTFILES_DIR..."
-  echo "Packages to install: ${PACKAGES[*]}"
-  STOW_CMD="stow --restow --adopt"
+    echo "Installing dotfiles from $DOTFILES_DIR..."
+    echo "Platform detected: $PLATFORM"
+    echo "Packages to install: ${PACKAGES[*]}"
+    STOW_CMD="stow --restow --adopt"
+    STOW_TARGET="--target ~"
 else
-  echo "Uninstalling dotfiles from $DOTFILES_DIR..."
-  echo "Packages to uninstall: ${PACKAGES[*]}"
-  STOW_CMD="stow --delete"
+    echo "Uninstalling dotfiles from $DOTFILES_DIR..."
+    echo "Platform: $PLATFORM"
+    echo "Packages to uninstall: ${PACKAGES[*]}"
+    STOW_CMD="stow --delete"
+    STOW_TARGET="--target ~"
 fi
 
 cd "$DOTFILES_DIR"
 
+# Process regular packages
 for package in "${PACKAGES[@]}"; do
-  if [[ -d "$package" ]]; then
-    echo "Processing $package..."
-    $STOW_CMD "$package"
-  else
-    echo "Warning: Directory $package not found, skipping."
-  fi
+    if [[ -d "$package" ]]; then
+        echo "Processing $package..."
+        $STOW_CMD $STOW_TARGET "$package"
+    else
+        echo "Warning: Directory $package not found, skipping."
+    fi
 done
+
+# Process platform-specific AGENTS.md (home folder)
+if [[ -d "agents-md/$PLATFORM" ]]; then
+    echo "Processing agents-md/$PLATFORM (home folder)..."
+    $STOW_CMD $STOW_TARGET -d "$DOTFILES_DIR/agents-md" "$PLATFORM"
+
+    # Also stow OpenCode-specific AGENTS.md if it exists
+    if [[ -f "agents-md/$PLATFORM/opencode/AGENTS.md" ]]; then
+        echo "Processing agents-md/$PLATFORM/opencode (OpenCode config)..."
+        $STOW_CMD --target ~/.config/opencode -d "$DOTFILES_DIR/agents-md/$PLATFORM" opencode
+    fi
+else
+    echo "Warning: agents-md/$PLATFORM not found, skipping AGENTS.md"
+fi
 
 echo "Operation completed successfully!"
 
