@@ -27,18 +27,15 @@ _path_prepend /opt/homebrew/sbin /opt/homebrew/bin
 
 # Toolchain homes (non-mise)
 export ANDROID_HOME="${ANDROID_HOME:-$HOME/Library/Android/sdk}"
-export M2_HOME="${M2_HOME:-/usr/local/apache-maven/apache-maven-3.9.9}"
-export ANT_HOME="${ANT_HOME:-/usr/local/apache-ant/apache-ant-1.10.15}"
 export BUN_INSTALL="${BUN_INSTALL:-$HOME/.bun}"
 
 # Personal / app CLIs above brew (no clash with brew formula names we care about).
+# maven/ant come from brew — no custom M2_HOME/ANT_HOME.
 _path_prepend \
   ${ANDROID_HOME:+$ANDROID_HOME/cmdline-tools/latest/bin} \
   ${ANDROID_HOME:+$ANDROID_HOME/emulator} \
   ${ANDROID_HOME:+$ANDROID_HOME/platform-tools} \
   ${ANDROID_HOME:+$ANDROID_HOME/tools} \
-  ${M2_HOME:+$M2_HOME/bin} \
-  ${ANT_HOME:+$ANT_HOME/bin} \
   "$HOME/.local/share/npm-global/bin" \
   "$BUN_INSTALL/bin" \
   "$HOME/.pixi/bin" \
