@@ -20,7 +20,6 @@ Local overrides: `~/.zshrc.local` (not in git).
 
 - **Homebrew** — system CLIs (`starship`, `rg`, `fzf`, `bat`, `zoxide`, plugins)
 - **mise** — runtimes only; config at `~/.config/mise/config.toml` (no `.tool-versions`)
-- **Removed**: asdf, nvm, pyenv, rvm, conda, nanobrew, Appium shell helpers
 
 ## Secrets
 
