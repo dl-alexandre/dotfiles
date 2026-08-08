@@ -1,0 +1,14 @@
+[settings]
+experimental = true
+idiomatic_version_file_enable_tools = ["node", "python", "ruby", "elixir", "erlang"]
+
+# brew-installed mise: upgrades come from `brew upgrade mise` / brew autoupdate
+# (mise self-update is disabled for Homebrew installs)
+
+[tools]
+node = "22"
+elixir = "1.20.3-otp-29"
+erlang = "29.0.5"
+neovim = "stable"
+java = "temurin-21"
+python = "3.13"

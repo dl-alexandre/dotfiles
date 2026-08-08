@@ -52,12 +52,12 @@ if [[ "$ACTION" == "install" ]]; then
   echo "Installing dotfiles from $DOTFILES_DIR (stow=$STOW)..."
   echo "Platform detected: $PLATFORM"
   echo "Packages to install: ${PACKAGES[*]}"
-  STOW_CMD=("$STOW" --restow --adopt)
+  STOW_ARGS=(--restow --adopt)
 else
   echo "Uninstalling dotfiles from $DOTFILES_DIR..."
   echo "Platform: $PLATFORM"
   echo "Packages to uninstall: ${PACKAGES[*]}"
-  STOW_CMD=("$STOW" --delete)
+  STOW_ARGS=(--delete)
 fi
 
 cd "$DOTFILES_DIR"
@@ -65,27 +65,25 @@ cd "$DOTFILES_DIR"
 for package in "${PACKAGES[@]}"; do
   if [[ -d "$package" ]]; then
     echo "Processing $package..."
-    "${STOW_CMD[@]}" --target "$HOME" "$package"
+    "$STOW" "${STOW_ARGS[@]}" --target "$HOME" "$package"
   else
     echo "Warning: Directory $package not found, skipping."
   fi
 done
 
-# Platform-specific AGENTS.md
 if [[ -d "agents-md/$PLATFORM" ]]; then
   echo "Processing agents-md/$PLATFORM (home folder)..."
-  "${STOW_CMD[@]}" --target "$HOME" -d "$DOTFILES_DIR/agents-md" "$PLATFORM"
+  "$STOW" "${STOW_ARGS[@]}" --target "$HOME" -d "$DOTFILES_DIR/agents-md" "$PLATFORM"
 
   if [[ -f "agents-md/$PLATFORM/opencode/AGENTS.md" ]]; then
     echo "Processing agents-md/$PLATFORM/opencode (OpenCode config)..."
     mkdir -p "$HOME/.config/opencode"
-    "${STOW_CMD[@]}" --target "$HOME/.config/opencode" -d "$DOTFILES_DIR/agents-md/$PLATFORM" opencode
+    "$STOW" "${STOW_ARGS[@]}" --target "$HOME/.config/opencode" -d "$DOTFILES_DIR/agents-md/$PLATFORM" opencode
   fi
 else
   echo "Warning: agents-md/$PLATFORM not found, skipping AGENTS.md"
 fi
 
-# Optional CLI helpers (install only)
 if [[ "$ACTION" == "install" && "$OSTYPE" == "darwin"* ]]; then
   if command -v mise >/dev/null 2>&1; then
     echo "Installing mise tools from config..."

@@ -1,14 +1,53 @@
+[user]
+	name = dl-alexandre
+	email = 166029845+dl-alexandre@users.noreply.github.com
+	signingkey = ~/.ssh/id_ed25519
+
+[init]
+	defaultBranch = main
+
+[core]
+	precomposeunicode = true
+
+[gpg]
+	format = ssh
+
+[commit]
+	gpgsign = true
+
 [alias]
 	co = checkout
 	br = branch
 	ci = commit
 	st = status
+
 [pull]
 	rebase = true
-[init]
-	defaultBranch = master
-[user]
-	name = Dalton Alexandre
-	email = alley.nightly_0b@icloud.com
-[core]
-	sshCommand = ssh -i ~/.ssh/github
+
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+
+[lfs]
+	worktreepath = false
+
+[http]
+	postBuffer = 524288000
+
+[pack]
+	windowMemory = 100m
+	packSizeLimit = 100m
+	threads = 0
+
+[credential]
+	helper = cache
+
+[credential "https://github.com"]
+	helper =
+	helper = !gh auth git-credential
+
+[credential "https://gist.github.com"]
+	helper =
+	helper = !gh auth git-credential
