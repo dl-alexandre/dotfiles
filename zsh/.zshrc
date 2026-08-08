@@ -1,7 +1,8 @@
 # ~/.zshrc — interactive zsh entrypoint.
-# Real config lives in zshrc.d/* (sourced in lexical order).
+# Real config lives in .zshrc.d/* (sourced in lexical order).
 
-ZSHRC_D="${ZSHRC_D:-$HOME/dotfiles/zsh/zshrc.d}"
+# Resolve next to this file (works via stow symlink).
+ZSHRC_D="${ZSHRC_D:-${${(%):-%x}:A:h}/.zshrc.d}"
 
 if [ -d "$ZSHRC_D" ]; then
   for _zshrc_fragment in "$ZSHRC_D"/*.zsh(N); do

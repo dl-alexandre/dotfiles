@@ -1,8 +1,7 @@
 # Single PATH builder. Highest priority first.
-# Package managers: Homebrew (system CLIs) > nanobrew (fast userland CLIs).
-# Language runtimes: mise (activated in 10-env.zsh) prepends its own paths
-# and sets JAVA_HOME for the active java tool.
-# See zshrc.d/README.md for the dual-manager policy.
+# Package manager: Homebrew (system CLIs, services, casks).
+# Language runtimes: mise (activated in 10-env.zsh) prepends its own paths.
+# See .zshrc.d/README.md.
 
 _path_prepend() {
   local dir
@@ -18,11 +17,9 @@ _path_prepend() {
 # Reset to a clean base (avoid inheriting duplicate junk from parent/launchd).
 PATH="/usr/bin:/bin:/usr/sbin:/sbin"
 
-# Core package managers — Homebrew first, nanobrew second (see README).
 _path_prepend \
   /opt/homebrew/bin \
   /opt/homebrew/sbin \
-  /opt/nanobrew/prefix/bin \
   /usr/local/bin
 
 # Toolchain homes (non-mise)
