@@ -12,14 +12,16 @@ Sourced in lexical order from `~/.zshrc` (stowed from `dotfiles/zsh/`).
 | `50-completions.zsh` | compinit + tool completions |
 | `60-prompt.zsh` | starship + zoxide (guarded) |
 | `70-tmux.zsh` | `t` / `tdl` / swarm helpers |
-| `80-plugins.zsh` | fzf, autosuggestions, atuin, syntax-highlighting |
+| `80-plugins.zsh` | fzf, direnv, atuin; lazy autosuggest/highlight |
 
 Local overrides: `~/.zshrc.local` (not in git).
 
 ## Package / version managers
 
 - **Homebrew** — system CLIs (`starship`, `rg`, `fzf`, `bat`, `zoxide`, plugins)
-- **mise** — runtimes only; config at `~/.config/mise/config.toml` (no `.tool-versions`)
+- **mise** — runtimes only; `~/.config/mise/config.toml` (no `.tool-versions`)
+- **Removed**: asdf, nvm, pyenv, rvm, conda, nanobrew, Appium shell helpers
+- **Rebuild**: `brew bundle install` from repo `Brewfile`
 
 ## Secrets
 
