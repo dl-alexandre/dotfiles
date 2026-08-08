@@ -7,6 +7,7 @@ Sourced in lexical order from `~/.zshrc` (stowed from `dotfiles/zsh/`).
 | `00-path.zsh` | Single PATH builder |
 | `10-env.zsh` | mise activate, secrets |
 | `20-aliases.zsh` | Short aliases |
+| `30-appium.zsh` | Appium / emulator helpers (`apm`, `apm_ext`, `kl`) |
 | `40-widgets.zsh` | ZLE widgets (esc-esc sudo) |
 | `50-completions.zsh` | compinit + tool completions |
 | `60-prompt.zsh` | starship + zoxide (guarded) |
