@@ -24,3 +24,5 @@ helium/.config/net.imput.helium/Default/Login\ Data*
 
 # Binaries
 scripts/.local/bin/helium
+# TPM installs plugins at runtime
+tmux/.config/tmux/plugins/

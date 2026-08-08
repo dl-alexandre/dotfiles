@@ -1,0 +1,119 @@
+tap "domt4/autoupdate", "https://github.com/DomT4/homebrew-autoupdate.git"
+tap "felixkratz/formulae", "https://github.com/FelixKratz/homebrew-formulae"
+tap "nikitabobko/tap"
+# Static analysis and lint tool, for (ba)sh scripts
+brew "shellcheck"
+# Static checker for GitHub Actions workflow files
+brew "actionlint"
+# Java build tool
+brew "ant"
+# Improved shell history for zsh, bash, fish and nushell
+brew "atuin", restart_service: :changed
+# Macro processing language
+brew "m4"
+# Automatic configure script builder
+brew "autoconf"
+# Tool for generating GNU Standards-compliant Makefiles
+brew "automake"
+# Official Amazon AWS command-line interface
+brew "awscli"
+# Clone of cat(1) with syntax highlighting and Git integration
+brew "bat"
+# Resource monitor. C++ version and continuation of bashtop and bpytop
+brew "btop"
+# Cross-platform make
+brew "cmake"
+# Load/unload environment variables based on $PWD
+brew "direnv"
+# Modern, maintained replacement for ls
+brew "eza"
+# Simple, fast and user-friendly alternative to find
+brew "fd"
+# Play, record, convert, and stream select audio and video codecs
+brew "ffmpeg"
+# X11 implementation of the Remote Desktop Protocol (RDP)
+brew "freerdp"
+# Command-line fuzzy finder written in Go
+brew "fzf"
+# GitHub command-line tool
+brew "gh"
+# Distributed revision control system
+brew "git"
+# Syntax-highlighting pager for git and diff output
+brew "git-delta"
+# Fast linters runner for Go
+brew "golangci-lint"
+# Language server for the Go language
+brew "gopls"
+# Open-source build automation tool based on the Groovy and Kotlin DSL
+brew "gradle"
+# Like cURL, but for gRPC
+brew "grpcurl"
+# Improved top (interactive process viewer)
+brew "htop"
+# Lightweight and flexible command-line JSON processor
+brew "jq"
+# Library to communicate with iOS devices natively
+brew "libimobiledevice"
+# Generic library support script
+brew "libtool"
+# Java-based project management
+brew "maven"
+# Polyglot runtime manager (asdf rust clone)
+brew "mise"
+# Simple tool to make locally trusted development certificates
+brew "mkcert"
+# Package compiler and linker metadata toolkit
+brew "pkgconf"
+# Object-relational database system
+brew "postgresql@18", restart_service: :changed, link: true
+# Erlang build tool
+brew "rebar3"
+# Search tool like grep and The Silver Searcher
+brew "ripgrep"
+# Graphical command-line client for SSH
+brew "sshs"
+# Cross-shell prompt for astronauts
+brew "starship"
+# Organize software neatly under a single directory tree (e.g. /usr/local)
+brew "stow"
+# Change macOS audio source from the command-line
+brew "switchaudio-osx"
+# Terminal multiplexer
+brew "tmux"
+# Display directories as trees (with optional color/HTML output)
+brew "tree"
+# Extremely fast Python package installer and resolver, written in Rust
+brew "uv"
+# Internet file retriever
+brew "wget"
+# Shell extension to navigate your filesystem faster
+brew "zoxide"
+# Fish-like fast/unobtrusive autosuggestions for zsh
+brew "zsh-autosuggestions"
+# Fish shell like syntax highlighting for zsh
+brew "zsh-syntax-highlighting"
+# A window border system for macOS
+brew "felixkratz/formulae/borders", trusted: true
+# AeroSpace is an i3-like tiling window manager for macOS
+cask "nikitabobko/tap/aerospace", trusted: true
+go "github.com/dl-alexandre/Apple-Map-Server-CLI/cmd/ams"
+go "golang.org/x/perf/cmd/benchstat"
+go "github.com/kisielk/errcheck"
+go "github.com/dl-alexandre/gdrv/cmd/gdrv"
+go "mvdan.cc/gofumpt"
+go "golang.org/x/tools/cmd/goimports"
+go "github.com/golangci/golangci-lint/v2/cmd/golangci-lint"
+go "github.com/goreleaser/goreleaser/v2"
+go "github.com/securego/gosec/v2/cmd/gosec"
+go "github.com/rogpeppe/govers"
+go "golang.org/x/vuln/cmd/govulncheck"
+go "github.com/dl-alexandre/Google-Play-Developer-CLI/cmd/gpd"
+go "github.com/vektra/mockery/v2"
+go "google.golang.org/protobuf/cmd/protoc-gen-go"
+go "google.golang.org/grpc/cmd/protoc-gen-go-grpc"
+go "github.com/dennwc/protod/cmd/protod"
+go "github.com/maaslalani/sheets"
+uv "mlx-lm"
+uv "posting"
+uv "terminal-bench"
