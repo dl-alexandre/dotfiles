@@ -1,4 +1,4 @@
-# Interactive plugins. Heavy ones defer until first prompt (zle -N precmd).
+# Interactive plugins. Heavy ones defer until first prompt.
 
 # fzf keybindings + completion (Homebrew) — cheap
 if [ -f /opt/homebrew/opt/fzf/shell/key-bindings.zsh ]; then
@@ -8,7 +8,12 @@ if [ -f /opt/homebrew/opt/fzf/shell/completion.zsh ]; then
   . /opt/homebrew/opt/fzf/shell/completion.zsh
 fi
 
-# Atuin — after plain hist opts; relatively cheap init
+# direnv — per-project env
+if command -v direnv >/dev/null 2>&1; then
+  eval "$(direnv hook zsh)"
+fi
+
+# Atuin — after plain hist opts
 if command -v atuin >/dev/null 2>&1; then
   eval "$(atuin init zsh --disable-up-arrow)"
 fi
@@ -24,7 +29,6 @@ _zsh_load_interactive_plugins() {
     ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
   fi
 
-  # Syntax highlighting MUST be last among ZLE-touching plugins
   if [ -f /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
     . /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
   fi
