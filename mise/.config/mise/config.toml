@@ -1,9 +1,9 @@
+# Single source of truth for runtimes (no ~/.tool-versions).
 [settings]
 experimental = true
 idiomatic_version_file_enable_tools = ["node", "python", "ruby", "elixir", "erlang"]
 
-# brew-installed mise: upgrades come from `brew upgrade mise` / brew autoupdate
-# (mise self-update is disabled for Homebrew installs)
+# brew-installed mise: upgrades via `brew upgrade mise` / brew autoupdate
 
 [tools]
 node = "22"
