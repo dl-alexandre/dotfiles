@@ -1,0 +1,53 @@
+# Single PATH builder. Highest priority first.
+# Package managers: Homebrew (system CLIs) > nanobrew (fast userland CLIs).
+# Language runtimes: mise (activated in 10-env.zsh) prepends its own paths
+# and sets JAVA_HOME for the active java tool.
+# See zshrc.d/README.md for the dual-manager policy.
+
+_path_prepend() {
+  local dir
+  for dir in "$@"; do
+    [ -d "$dir" ] || continue
+    case ":$PATH:" in
+      *":$dir:"*) ;;
+      *) PATH="$dir${PATH:+:$PATH}" ;;
+    esac
+  done
+}
+
+# Reset to a clean base (avoid inheriting duplicate junk from parent/launchd).
+PATH="/usr/bin:/bin:/usr/sbin:/sbin"
+
+# Core package managers — Homebrew first, nanobrew second (see README).
+_path_prepend \
+  /opt/homebrew/bin \
+  /opt/homebrew/sbin \
+  /opt/nanobrew/prefix/bin \
+  /usr/local/bin
+
+# Toolchain homes (non-mise)
+export ANDROID_HOME="${ANDROID_HOME:-$HOME/Library/Android/sdk}"
+export M2_HOME="${M2_HOME:-/usr/local/apache-maven/apache-maven-3.9.9}"
+export ANT_HOME="${ANT_HOME:-/usr/local/apache-ant/apache-ant-1.10.15}"
+export BUN_INSTALL="${BUN_INSTALL:-$HOME/.bun}"
+
+_path_prepend \
+  ${ANDROID_HOME:+$ANDROID_HOME/cmdline-tools/latest/bin} \
+  ${ANDROID_HOME:+$ANDROID_HOME/emulator} \
+  ${ANDROID_HOME:+$ANDROID_HOME/platform-tools} \
+  ${ANDROID_HOME:+$ANDROID_HOME/tools} \
+  ${M2_HOME:+$M2_HOME/bin} \
+  ${ANT_HOME:+$ANT_HOME/bin} \
+  "$HOME/.cargo/bin" \
+  "$HOME/.local/share/npm-global/bin" \
+  "$BUN_INSTALL/bin" \
+  "$HOME/.pixi/bin" \
+  "$HOME/.opencode/bin" \
+  "$HOME/.grok/bin" \
+  "$HOME/.antigravity/antigravity/bin" \
+  "$HOME/.antigravity-ide/antigravity-ide/bin" \
+  "$HOME/bin" \
+  "$HOME/.local/bin"
+
+export PATH
+unset -f _path_prepend

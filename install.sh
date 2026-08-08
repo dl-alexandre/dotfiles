@@ -1,109 +1,114 @@
 #!/bin/bash
-# Install dotfiles using stow
+# Install dotfiles using GNU Stow (prefer Homebrew stow on macOS).
 
-set -e
-shopt -s nullglob  # Prevent globbing errors if no matches
+set -euo pipefail
+shopt -s nullglob
 
-# Check if stow is installed
-if ! command -v stow &> /dev/null; then
-    echo "Error: stow is not installed. Please install it first."
-    exit 1
+# Prefer a working stow — ~/.local/bin/stow may be a broken partial install.
+if [[ -x /opt/homebrew/bin/stow ]]; then
+  STOW=/opt/homebrew/bin/stow
+elif command -v stow >/dev/null 2>&1; then
+  STOW="$(command -v stow)"
+else
+  echo "Error: stow is not installed. On macOS: brew install stow" >&2
+  exit 1
 fi
 
-# Function to show usage
 usage() {
-    echo "Usage: $0 [install|uninstall]"
-    echo "  install  - Stow dotfiles (default)"
-    echo "  uninstall - Unstow dotfiles"
-    exit 1
+  echo "Usage: $0 [install|uninstall]"
+  echo "  install   - Stow dotfiles (default)"
+  echo "  uninstall - Unstow dotfiles"
+  exit 1
 }
 
 ACTION="install"
 if [[ $# -gt 0 ]]; then
-    case $1 in
-        install) ACTION="install" ;;
-        uninstall) ACTION="uninstall" ;;
-        *) usage ;;
-    esac
+  case $1 in
+    install) ACTION="install" ;;
+    uninstall) ACTION="uninstall" ;;
+    *) usage ;;
+  esac
 fi
 
 DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-# Detect platform (linux or darwin/macos)
 OS=$(uname -s | tr '[:upper:]' '[:lower:]')
 case "$OS" in
-    linux*) PLATFORM="linux" ;;
-    darwin*) PLATFORM="macos" ;;
-    *) echo "Unknown OS: $OS"; exit 1 ;;
+  linux*) PLATFORM="linux" ;;
+  darwin*) PLATFORM="macos" ;;
+  *) echo "Unknown OS: $OS"; exit 1 ;;
 esac
 
-# Dynamically get packages from directories (excluding hidden and non-dotfile dirs)
 PACKAGES=()
 for dir in */; do
-    dir=${dir%/}
-    if [[ -d "$dir" && ! "$dir" =~ ^\. && "$dir" != "scripts" ]]; then
-        # Skip agents-md (handled separately)
-        if [[ "$dir" != "agents-md" ]]; then
-            PACKAGES+=("$dir")
-        fi
-    fi
+  dir=${dir%/}
+  if [[ -d "$dir" && ! "$dir" =~ ^\. && "$dir" != "scripts" && "$dir" != "agents-md" && "$dir" != "stow-2.4.0" ]]; then
+    PACKAGES+=("$dir")
+  fi
 done
-# Add scripts separately as it's nested
 PACKAGES+=("scripts")
 
 if [[ "$ACTION" == "install" ]]; then
-    echo "Installing dotfiles from $DOTFILES_DIR..."
-    echo "Platform detected: $PLATFORM"
-    echo "Packages to install: ${PACKAGES[*]}"
-    STOW_CMD="stow --restow --adopt"
-    STOW_TARGET="--target ~"
+  echo "Installing dotfiles from $DOTFILES_DIR (stow=$STOW)..."
+  echo "Platform detected: $PLATFORM"
+  echo "Packages to install: ${PACKAGES[*]}"
+  STOW_CMD=("$STOW" --restow --adopt)
 else
-    echo "Uninstalling dotfiles from $DOTFILES_DIR..."
-    echo "Platform: $PLATFORM"
-    echo "Packages to uninstall: ${PACKAGES[*]}"
-    STOW_CMD="stow --delete"
-    STOW_TARGET="--target ~"
+  echo "Uninstalling dotfiles from $DOTFILES_DIR..."
+  echo "Platform: $PLATFORM"
+  echo "Packages to uninstall: ${PACKAGES[*]}"
+  STOW_CMD=("$STOW" --delete)
 fi
 
 cd "$DOTFILES_DIR"
 
-# Process regular packages
 for package in "${PACKAGES[@]}"; do
-    if [[ -d "$package" ]]; then
-        echo "Processing $package..."
-        $STOW_CMD $STOW_TARGET "$package"
-    else
-        echo "Warning: Directory $package not found, skipping."
-    fi
+  if [[ -d "$package" ]]; then
+    echo "Processing $package..."
+    "${STOW_CMD[@]}" --target "$HOME" "$package"
+  else
+    echo "Warning: Directory $package not found, skipping."
+  fi
 done
 
-# Process platform-specific AGENTS.md (home folder)
+# Platform-specific AGENTS.md
 if [[ -d "agents-md/$PLATFORM" ]]; then
-    echo "Processing agents-md/$PLATFORM (home folder)..."
-    $STOW_CMD $STOW_TARGET -d "$DOTFILES_DIR/agents-md" "$PLATFORM"
+  echo "Processing agents-md/$PLATFORM (home folder)..."
+  "${STOW_CMD[@]}" --target "$HOME" -d "$DOTFILES_DIR/agents-md" "$PLATFORM"
 
-    # Also stow OpenCode-specific AGENTS.md if it exists
-    if [[ -f "agents-md/$PLATFORM/opencode/AGENTS.md" ]]; then
-        echo "Processing agents-md/$PLATFORM/opencode (OpenCode config)..."
-        $STOW_CMD --target ~/.config/opencode -d "$DOTFILES_DIR/agents-md/$PLATFORM" opencode
-    fi
+  if [[ -f "agents-md/$PLATFORM/opencode/AGENTS.md" ]]; then
+    echo "Processing agents-md/$PLATFORM/opencode (OpenCode config)..."
+    mkdir -p "$HOME/.config/opencode"
+    "${STOW_CMD[@]}" --target "$HOME/.config/opencode" -d "$DOTFILES_DIR/agents-md/$PLATFORM" opencode
+  fi
 else
-    echo "Warning: agents-md/$PLATFORM not found, skipping AGENTS.md"
+  echo "Warning: agents-md/$PLATFORM not found, skipping AGENTS.md"
+fi
+
+# Optional CLI helpers (install only)
+if [[ "$ACTION" == "install" && "$OSTYPE" == "darwin"* ]]; then
+  if command -v mise >/dev/null 2>&1; then
+    echo "Installing mise tools from config..."
+    mise install
+  else
+    echo "Skipping mise tools (mise not found — brew install mise)"
+  fi
+
+  if command -v brew >/dev/null 2>&1; then
+    if ! brew tap 2>/dev/null | grep -qx 'homebrew/autoupdate'; then
+      echo "Tapping homebrew/autoupdate..."
+      brew tap homebrew/autoupdate || true
+    fi
+    if ! brew autoupdate status 2>/dev/null | grep -q 'is installed and running'; then
+      echo "Starting brew autoupdate (daily upgrade+cleanup; covers mise)..."
+      brew autoupdate start 86400 --upgrade --cleanup || true
+    fi
+  fi
+
+  if command -v npm >/dev/null 2>&1; then
+    echo "Installing npm global tools (tldr)..."
+    npm install -g tldr || true
+  fi
 fi
 
 echo "Operation completed successfully!"
-
-echo "Dotfiles installed successfully!"
-echo ""
-
-echo ""
-echo "Additional packages to install:"
-echo "  yay -S losslesscut-bin  # Video editing tool"
-echo "  yay -S omarchy          # Theme manager (see omarchy.com)"
-echo ""
-echo "Remember to configure sudoers for auto-power.sh:"
-echo "  sudo visudo -f /etc/sudoers.d/cpu-thermal"
-echo ""
-echo "Add these lines:"
-echo "  %wheel ALL=(ALL) NOPASSWD: /usr/bin/tee /sys/devices/system/cpu/*/cpufreq/scaling_governor"
-echo "  %wheel ALL=(ALL) NOPASSWD: /usr/bin/tee /sys/class/thermal/thermal_zone*/policy"

@@ -1,0 +1,6 @@
+alias src='source ~/.zshrc'
+alias vzs='nvim ~/dotfiles/zsh/.zshrc'
+alias mt='cd ~/Documents/GitHub/MILC/MilcTesting'
+alias rnr='~/Documents/GitHub/MILC/SwiftAppium/actions-runner/run.sh'
+alias sa='~/Documents/GitHub/MILC/SwiftAppium'
+alias clauded='claude --dangerously-skip-permissions'
