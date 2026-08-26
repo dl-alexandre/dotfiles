@@ -13,6 +13,23 @@ Personal dotfiles managed with GNU Stow.
 - GNU Stow
 - Bash
 
+## macOS
+
+On Darwin, `./install.sh` also:
+
+- Stows `macos/` (defaults script, Caps Lock → Delete, AeroSpace autobalance + LaunchAgents)
+- Applies captured `defaults` via `~/.local/bin/macos-apply`
+- Loads `com.dl-alexandre.*` LaunchAgents
+- Optionally starts Homebrew autoupdate
+
+Rebuild packages with:
+
+```bash
+brew bundle --file=brew/Brewfile
+```
+
+AeroSpace lives in `aerospace/.config/aerospace/aerospace.toml` (stowed to `~/.config/aerospace/`).
+
 ## Additional Packages
 
 After installation, consider installing:

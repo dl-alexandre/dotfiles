@@ -1,50 +1,143 @@
-# Brewfile — machine rebuild: brew bundle install
-# Generated 2026-08-08 from brew leaves + casks
-
-tap "felixkratz/formulae"
-tap "homebrew/autoupdate"
+tap "domt4/autoupdate", "https://github.com/DomT4/homebrew-autoupdate.git", trusted: true
+tap "felixkratz/formulae", "https://github.com/FelixKratz/homebrew-formulae"
+tap "lizardbyte/homebrew", "https://github.com/LizardByte/homebrew-homebrew", trusted: true
 tap "nikitabobko/tap"
-
-# Core CLI
+# Static analysis and lint tool, for (ba)sh scripts
+brew "shellcheck"
+# Static checker for GitHub Actions workflow files
 brew "actionlint"
-brew "atuin"
+# Java build tool
+brew "ant"
+# Improved shell history for zsh, bash, fish and nushell
+brew "atuin", restart_service: :changed
+# Macro processing language
+brew "m4"
+# Automatic configure script builder
+brew "autoconf"
+# Tool for generating GNU Standards-compliant Makefiles
+brew "automake"
+# Official Amazon AWS command-line interface
 brew "awscli"
+# Clone of cat(1) with syntax highlighting and Git integration
 brew "bat"
+# Resource monitor. C++ version and continuation of bashtop and bpytop
+brew "btop"
+# Cross-platform make
+brew "cmake"
+# Load/unload environment variables based on $PWD
 brew "direnv"
+# Modern, maintained replacement for ls
 brew "eza"
+# Simple, fast and user-friendly alternative to find
 brew "fd"
+# Play, record, convert, and stream select audio and video codecs
+brew "ffmpeg"
+# X11 implementation of the Remote Desktop Protocol (RDP)
+brew "freerdp"
+# Command-line fuzzy finder written in Go
 brew "fzf"
+# GitHub command-line tool
 brew "gh"
+# Distributed revision control system
 brew "git"
+# Syntax-highlighting pager for git and diff output
 brew "git-delta"
-brew "htop"
-brew "jq"
-brew "mise"
-brew "mkcert"
-brew "ripgrep"
-brew "starship"
-brew "stow"
-brew "tmux"
-brew "tree"
-brew "uv"
-brew "wget"
-brew "zoxide"
-brew "zsh-autosuggestions"
-brew "zsh-syntax-highlighting"
-
-# Dev / languages support
+# Fast linters runner for Go
 brew "golangci-lint"
+# Language server for the Go language
 brew "gopls"
+# Open-source build automation tool based on the Groovy and Kotlin DSL
 brew "gradle"
+# Like cURL, but for gRPC
 brew "grpcurl"
-brew "postgresql@18"
-brew "rebar3"
-brew "sshs"
-
-# Mobile / misc
+# Improved top (interactive process viewer)
+brew "htop"
+# Generic library support script
+brew "libtool"
+# Tools and libraries to manipulate images in select formats
+brew "imagemagick"
+# CLI wrapper for basic network utilities on macOS - ip command
+brew "iproute2mac"
+# Lightweight and flexible command-line JSON processor
+brew "jq"
+# Library to communicate with iOS devices natively
 brew "libimobiledevice"
+# Library to render SVG files using Cairo
+brew "librsvg"
+# Java-based project management
+brew "maven"
+# Polyglot runtime manager (asdf rust clone)
+brew "mise"
+# Simple tool to make locally trusted development certificates
+brew "mkcert"
+# Package compiler and linker metadata toolkit
+brew "pkgconf"
+# PDF rendering library (based on the xpdf-3.0 code base)
+brew "poppler"
+# Object-relational database system
+brew "postgresql@18", restart_service: :changed, link: true
+# Search tool like grep and The Silver Searcher
+brew "ripgrep"
+# Graphical command-line client for SSH
+brew "sshs"
+# Cross-shell prompt for astronauts
+brew "starship"
+# Organize software neatly under a single directory tree (e.g. /usr/local)
+brew "stow"
+# Change macOS audio source from the command-line
 brew "switchaudio-osx"
-brew "felixkratz/formulae/borders"
-
-# Casks
-cask "aerospace"
+# Terminal multiplexer
+brew "tmux"
+# Display directories as trees (with optional color/HTML output)
+brew "tree"
+# Collection of Linux utilities
+brew "util-linux"
+# Extremely fast Python package installer and resolver, written in Rust
+brew "uv"
+# Internet file retriever
+brew "wget"
+# Shell extension to navigate your filesystem faster
+brew "zoxide"
+# Fish-like fast/unobtrusive autosuggestions for zsh
+brew "zsh-autosuggestions"
+# Fish shell like syntax highlighting for zsh
+brew "zsh-syntax-highlighting"
+# A window border system for macOS
+brew "felixkratz/formulae/borders", trusted: true
+# Self-hosted game stream host for Moonlight
+brew "lizardbyte/homebrew/sunshine", trusted: true
+# AeroSpace is an i3-like tiling window manager for macOS
+cask "nikitabobko/tap/aerospace", trusted: true
+# Plugin for AWS CLI to start and end sessions that connect to managed instances
+cask "session-manager-plugin"
+go "github.com/dl-alexandre/Apple-Map-Server-CLI/cmd/ams"
+go "golang.org/x/perf/cmd/benchstat"
+go "github.com/kisielk/errcheck"
+go "github.com/dl-alexandre/gdrv/cmd/gdrv"
+go "mvdan.cc/gofumpt"
+go "golang.org/x/tools/cmd/goimports"
+go "github.com/golangci/golangci-lint/v2/cmd/golangci-lint"
+go "github.com/goreleaser/goreleaser/v2"
+go "github.com/securego/gosec/v2/cmd/gosec"
+go "github.com/rogpeppe/govers"
+go "golang.org/x/vuln/cmd/govulncheck"
+go "github.com/dl-alexandre/Google-Play-Developer-CLI/cmd/gpd"
+go "github.com/vektra/mockery/v2"
+go "google.golang.org/protobuf/cmd/protoc-gen-go"
+go "google.golang.org/grpc/cmd/protoc-gen-go-grpc"
+go "github.com/dennwc/protod/cmd/protod"
+go "github.com/maaslalani/sheets"
+cargo "fd-find"
+cargo "see-el-eye"
+cargo "sshs", source: "https://github.com/quantumsheep/sshs"
+uv "mlx-lm"
+uv "posting"
+uv "terminal-bench"
+npm "@anthropic-ai/claude-code"
+npm "@bufbuild/buf"
+npm "@google/gemini-cli"
+npm "@openai/codex"
+npm "corepack"
+npm "pnpm"
+npm "tldr"
+npm "yarn"

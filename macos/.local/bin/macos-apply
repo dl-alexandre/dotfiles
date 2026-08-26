@@ -1,0 +1,63 @@
+#!/usr/bin/env bash
+# Apply captured macOS preferences. Safe to re-run.
+# Source of truth: live settings on DairyBookPro (2026-08-26).
+
+set -euo pipefail
+
+if [[ "$(uname -s)" != "Darwin" ]]; then
+  echo "macos-apply is Darwin-only" >&2
+  exit 1
+fi
+
+# Appearance
+defaults write NSGlobalDomain AppleInterfaceStyleSwitchesAutomatically -bool true
+defaults write NSGlobalDomain AppleAccentColor -int 3
+defaults write NSGlobalDomain AppleHighlightColor -string "0.752941 0.964706 0.678431 Green"
+defaults write NSGlobalDomain AppleIconAppearanceTheme -string "ClearAutomatic"
+defaults write NSGlobalDomain AppleIconAppearanceTintColor -string "Graphite"
+defaults write NSGlobalDomain NSGlassTintAmount -int 0
+
+# Keyboard / UI chrome
+defaults write NSGlobalDomain NSAutomaticWindowAnimationsEnabled -bool false
+defaults write NSGlobalDomain NSBrowserColumnAnimationSpeedMultiplier -float 0
+defaults write NSGlobalDomain NSDocumentRevisionsWindowTransformAnimation -bool false
+defaults write NSGlobalDomain AppleMiniaturizeOnDoubleClick -bool false
+
+# Dock — hidden, instant, no Mission Control space reordering
+defaults write com.apple.dock autohide -bool true
+defaults write com.apple.dock autohide-delay -float 0
+defaults write com.apple.dock autohide-time-modifier -float 0
+defaults write com.apple.dock tilesize -int 40
+defaults write com.apple.dock mru-spaces -bool false
+defaults write com.apple.dock expose-animation-duration -float 0.1
+defaults write com.apple.dock expose-group-apps -bool true
+defaults write com.apple.dock show-recents -bool true
+defaults write com.apple.dock minimize-to-application -bool false
+
+# Finder
+defaults write com.apple.finder ShowPathbar -bool true
+defaults write com.apple.finder FXPreferredViewStyle -string "Nlsv"
+
+# Clock
+defaults write com.apple.menuextra.clock ShowAMPM -bool true
+defaults write com.apple.menuextra.clock ShowDate -int 0
+defaults write com.apple.menuextra.clock ShowDayOfWeek -bool true
+
+# Trackpad — tap to click, three-finger drag, no force click
+defaults write com.apple.AppleMultitouchTrackpad Clicking -bool true
+defaults write com.apple.AppleMultitouchTrackpad ForceSuppressed -bool true
+defaults write com.apple.AppleMultitouchTrackpad TrackpadThreeFingerDrag -bool true
+defaults write com.apple.AppleMultitouchTrackpad TrackpadRightClick -bool true
+defaults write com.apple.AppleMultitouchTrackpad TrackpadThreeFingerTapGesture -int 2
+defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true
+defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadThreeFingerDrag -bool true
+defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadRightClick -bool true
+defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadThreeFingerTapGesture -int 2
+
+# Caps Lock → Delete (also loaded at login via LaunchAgent)
+if [[ -x "$HOME/.local/bin/remap-capslock.sh" ]]; then
+  "$HOME/.local/bin/remap-capslock.sh" || true
+fi
+
+killall Dock Finder SystemUIServer 2>/dev/null || true
+echo "macOS defaults applied."

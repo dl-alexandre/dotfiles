@@ -107,6 +107,23 @@ if [[ "$ACTION" == "install" && "$OSTYPE" == "darwin"* ]]; then
     echo "Installing npm global tools (tldr)..."
     npm install -g tldr || true
   fi
+
+  if [[ -x "$HOME/.local/bin/macos-apply" ]]; then
+    echo "Applying macOS defaults..."
+    "$HOME/.local/bin/macos-apply" || true
+  fi
+
+  UID_NUM="$(id -u)"
+  for plist in \
+    "$HOME/Library/LaunchAgents/com.dl-alexandre.aerospace-autobalance.plist" \
+    "$HOME/Library/LaunchAgents/com.dl-alexandre.remap-capslock.plist"
+  do
+    if [[ -f "$plist" ]]; then
+      echo "Loading $(basename "$plist")..."
+      launchctl bootout "gui/${UID_NUM}" "$plist" 2>/dev/null || true
+      launchctl bootstrap "gui/${UID_NUM}" "$plist" 2>/dev/null || launchctl load "$plist" || true
+    fi
+  done
 fi
 
 echo "Operation completed successfully!"
