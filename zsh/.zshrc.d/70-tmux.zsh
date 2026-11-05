@@ -141,9 +141,9 @@ t() {
   fi
   if [ "$1" = "-l" ]; then
     print -l \
-      "  mm    -> ssh milcmini-remote    (macOS)" \
-      "  ts    -> ssh testserver-remote  (Linux)" \
-      "  ip    -> ssh ideapad-remote     (Linux)" \
+      "  mm    -> ssh milcmini            (macOS, tailnet)" \
+      "  ts    -> ssh testserver          (Linux, tailnet)" \
+      "  ip    -> ssh ideapad             (Linux, tailnet)" \
       "  ox    -> ssh optiplex-xe2-local (Linux)" \
       "  cm    -> ssh creamery_mini      (macOS)" \
       "  mira  -> ssh mira_main          (Linux)" \
@@ -168,9 +168,9 @@ USAGE
   t -h           This help
 
 REMOTE SHORTCUTS (auto-ssh on creation)
-  mm    -> ssh milcmini-remote    (macOS)
-  ts    -> ssh testserver-remote  (Linux)
-  ip    -> ssh ideapad-remote     (Linux)
+  mm    -> ssh milcmini            (macOS, tailnet)
+  ts    -> ssh testserver          (Linux, tailnet)
+  ip    -> ssh ideapad             (Linux, tailnet)
   ox    -> ssh optiplex-xe2-local (Linux)
   cm    -> ssh creamery_mini      (macOS)
   mira  -> ssh mira_main          (Linux)
@@ -196,9 +196,9 @@ HELP
 
   local cmd=""
   case "$name" in
-    mm)    cmd="ssh milcmini-remote" ;;
-    ts)    cmd="ssh testserver-remote" ;;
-    ip)    cmd="ssh ideapad-remote" ;;
+    mm)    cmd="ssh milcmini" ;;
+    ts)    cmd="ssh testserver" ;;
+    ip)    cmd="ssh ideapad" ;;
     ox)    cmd="ssh optiplex-xe2-local" ;;
     cm)    cmd="ssh creamery_mini" ;;
     mira)  cmd="ssh mira_main" ;;
